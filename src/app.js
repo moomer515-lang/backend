@@ -28,17 +28,19 @@ app.use(helmet({
 // Set CORS_ORIGINS in .env (or Render's environment settings) as a comma-separated
 // list of allowed frontend URLs.
 // Example: CORS_ORIGINS=https://shield-frontend.onrender.com,http://127.0.0.1:5501
+const stripTrailingSlash = (s) => s.trim().replace(/\/+$/, '')
+
 const allowedOrigins = (
   process.env.CORS_ORIGINS ||
   'https://shield-frontend-9w5u.onrender.com'
-).split(',').map((s) => s.trim())
+).split(',').map(stripTrailingSlash)
 
 const corsOptions = {
   origin: (origin, cb) => {
     // Allow requests with no origin (Postman, curl, mobile apps)
     if (!origin) return cb(null, true)
-    if (allowedOrigins.includes(origin)) return cb(null, true)
-    logger.warn(`CORS blocked: ${origin}`)
+    if (allowedOrigins.includes(stripTrailingSlash(origin))) return cb(null, true)
+    logger.warn(`CORS blocked: "${origin}" — allowed list: ${allowedOrigins.join(', ')}`)
     cb(new Error(`CORS: origin ${origin} not allowed.`))
   },
   credentials: true,
