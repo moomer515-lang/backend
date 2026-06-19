@@ -31,8 +31,7 @@ app.use(helmet({
 const stripTrailingSlash = (s) => s.trim().replace(/\/+$/, '')
 
 const allowedOrigins = (
-  process.env.CORS_ORIGINS ||
-  'https://shield-frontend-9w5u.onrender.com'
+  '*'
 ).split(',').map(stripTrailingSlash)
 
 const corsOptions = {

@@ -21,8 +21,7 @@ const server = http.createServer(app)
 // Same CORS_ORIGINS env var used by Express (see src/app.js) so the Socket.io
 // handshake is allowed from the deployed frontend URL too.
 const allowedOrigins = (
-  process.env.CORS_ORIGINS ||
-  'https://shield-frontend-9w5u.onrender.com'
+  '*'
 ).split(',').map((s) => s.trim())
 
 const io = new Server(server, {
