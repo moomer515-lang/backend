@@ -1,0 +1,8 @@
+node_modules/
+.env
+nimir.db
+uploads/*
+!uploads/.gitkeep
+*.log
+.DS_Store
+dist/
