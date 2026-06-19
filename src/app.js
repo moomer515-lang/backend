@@ -48,6 +48,12 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }
 
+// Printed once at boot so it's immediately visible in Render's log stream —
+// confirms (a) this build actually deployed, and (b) what CORS_ORIGINS the
+// running process resolved to. If this line doesn't show the frontend's
+// exact URL, the env var isn't set the way you think it is.
+logger.info(`[CORS] NODE_ENV=${process.env.NODE_ENV || 'undefined'} | Allowed origins: ${allowedOrigins.join(', ')}`)
+
 // Must register CORS before ALL other middleware so preflight OPTIONS
 // requests are answered before Helmet or any route handler sees them.
 app.use(cors(corsOptions))
