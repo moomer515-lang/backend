@@ -14,6 +14,10 @@ const { contactRouter, timerRouter, profileRouter, notifRouter, supportRouter }
 const { errorHandler, notFound } = require('./middleware/errorHandler')
 const logger             = require('./utils/logger')
 
+
+const dns = require('dns')
+dns.setDefaultResultOrder('ipv4first')
+
 const app = express()
 
 // ─── Trust proxy (for correct IP behind Nginx / load balancer) ───────────────
