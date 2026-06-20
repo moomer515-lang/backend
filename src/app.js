@@ -55,8 +55,14 @@ logger.info(`[CORS] NODE_ENV=${process.env.NODE_ENV || 'undefined'} | Allowed or
 
 // Must register CORS before ALL other middleware so preflight OPTIONS
 // requests are answered before Helmet or any route handler sees them.
-app.use(cors(corsOptions))
-app.options('*', cors(corsOptions)) 
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+}))
+
+app.options('*', cors({
+  origin: '*'
+}))
 
 // ─── Compression ─────────────────────────────────────────────────────────────
 app.use(compression())

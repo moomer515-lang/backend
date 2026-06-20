@@ -24,19 +24,19 @@ const allowedOrigins = (
   '*'
 ).split(',').map((s) => s.trim())
 
+
+// ─── Socket.io ────────────────────────────────────────────────────────────────
 const io = new Server(server, {
   cors: {
-    origin:      allowedOrigins,
-    credentials: true,
-    methods:     ['GET', 'POST']
+    origin: '*',
+    methods: ['GET', 'POST']
   },
-  transports:      ['websocket', 'polling'],
-  pingTimeout:     60000,
-  pingInterval:    25000,
-  // Lets the client resume missed events after a brief disconnect instead of
-  // re-subscribing from scratch. This is a UX nicety only — the timer's
-  // source of truth always stays the DB (expiresAt), never socket buffers.
-  connectionStateRecovery: { maxDisconnectionDuration: 2 * 60 * 1000 }
+  transports: ['websocket', 'polling'],
+  pingTimeout: 60000,
+  pingInterval: 25000,
+  connectionStateRecovery: {
+    maxDisconnectionDuration: 2 * 60 * 1000
+  }
 })
 
 // ─── Socket auth middleware ───────────────────────────────────────────────────
