@@ -13,6 +13,8 @@ const createNotification = async (userId, type, title, body, metadata = null) =>
   }
 }
 
+
+
 // ─── Email (Gmail via nodemailer, authenticated with an App Password) ────────
 // Lazily created + cached so a missing/invalid config fails fast on first
 // send rather than at module load time (keeps tests, which mock sendEmail

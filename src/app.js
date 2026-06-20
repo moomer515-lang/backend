@@ -132,6 +132,44 @@ app.get('/', (req, res) => {
   res.json({ name: 'Nimir API', version: '1.0.0', docs: '/api/health' })
 })
 
+
+
+const nodemailer = require('nodemailer')
+
+app.get('/api/test-email', async (req, res) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: (process.env.APP_PASSWORDS || '').replace(/\s+/g, '')
+      }
+    })
+
+    await transporter.verify()
+
+    const info = await transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: process.env.SMTP_USER,
+      subject: 'Shield Test',
+      text: 'Email test successful'
+    })
+
+    res.json({
+      success: true,
+      messageId: info.messageId
+    })
+  } catch (err) {
+    console.error(err)
+
+    res.status(500).json({
+      success: false,
+      error: err.message,
+      code: err.code
+    })
+  }
+})
+
 // ─── 404 + error handlers ─────────────────────────────────────────────────────
 app.use(notFound)
 app.use(errorHandler)
