@@ -11,6 +11,7 @@ const { connectDB, disconnectDB } = require('./src/config/db')
 const timerService = require('./src/services/timer.service')
 const metrics      = require('./src/utils/metrics')
 const logger      = require('./src/utils/logger')
+const console = require('console')
 
 const PORT = process.env.PORT || 8000
 
@@ -63,6 +64,7 @@ io.use(async (socket, next) => {
 io.on('connection', (socket) => {
   // Each user gets their own private room for targeted pushes
   socket.join(`user:${socket.userId}`)
+  console.log(`user:${socket.userId}`)
 
   if (socket.recovered) {
     // Reconnected within the recovery window — client state was resumed,
