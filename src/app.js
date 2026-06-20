@@ -1,3 +1,6 @@
+const dns = require('dns')
+dns.setDefaultResultOrder('ipv4first')
+
 const express            = require('express')
 const cors               = require('cors')
 const helmet             = require('helmet')
@@ -15,8 +18,6 @@ const { errorHandler, notFound } = require('./middleware/errorHandler')
 const logger             = require('./utils/logger')
 
 
-const dns = require('dns')
-dns.setDefaultResultOrder('ipv4first')
 
 const app = express()
 

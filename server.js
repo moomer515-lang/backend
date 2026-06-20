@@ -1,5 +1,11 @@
 require('dotenv').config()
 
+// Force IPv4-first DNS resolution app-wide. Render's network doesn't route
+// outbound IPv6, but Node/nodemailer otherwise prefer IPv6 addresses for
+// hosts like smtp.gmail.com, causing ENETUNREACH on every SMTP connection.
+const dns = require('dns')
+dns.setDefaultResultOrder('ipv4first')
+
 const http        = require('http')
 const { Server }  = require('socket.io')
 const jwt         = require('jsonwebtoken')
